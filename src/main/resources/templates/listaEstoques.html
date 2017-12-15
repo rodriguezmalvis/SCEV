@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head th:replace="template :: head">
+<meta charset="UTF-8"/>
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<br/>
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Cod Estoque</th>
+		      <th scope="col">Nome</th>
+		      <th scope="col">Descrição</th>
+		      <th scope="col">Total Produtos</th>
+		      <th scope="col"></th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="estoque,iterationStatus : ${estoques}">
+		      <th th:text="${estoque.idEstoque}" scope="row"></th>
+		      <td th:text="${estoque.nome}"></td>
+		      <td th:text="${estoque.descricao}"></td>
+		      <td>0000</td>
+		      <td><a th:href="@{/estoque/produtos}+${estoque.idEstoque}">Ver Produtos</a></td>
+		      <td>
+		      	<div class="row">
+					<div class="col text-right">
+					  <form th:action="@{/estoque/editar}" method="post">
+					  	<input class="form-control" type="hidden" name="idEstoque" th:value="${estoque.idEstoque}"/>
+						<button type="submit" class="btn btn-sm btn-primary">Editar</button>
+					  </form>
+					</div>
+					<div class="col text-left">
+					  <form th:action="@{/estoque/remover}" method="post">
+					  	<input class="form-control" type="hidden" name="idEstoque" th:value="${estoque.idEstoque}"/>
+						<button type="submit" class="btn btn-sm btn-danger">Remover</button>
+					  </form>
+					</div>
+				</div>
+		      </td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>

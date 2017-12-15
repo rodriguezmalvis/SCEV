@@ -45,4 +45,40 @@ public class EstoqueController {
 		
 	}
 	
+	@GetMapping("lista")
+	public ModelAndView listaEstoques() {
+		
+		ModelAndView view = new ModelAndView("listaEstoques");
+		
+		view.addObject("estoques",estoqueDao.findAll());
+		
+		return view;
+		
+	}
+	
+	@PostMapping("editar")
+	public ModelAndView editarEstoque(Integer idEstoque) {
+		
+		ModelAndView view = new ModelAndView("estoqueForm");
+		
+		view.addObject("estoque", estoqueDao.findOne(idEstoque));
+		view.addObject("tiposEstoque", TipoEstoque.values());
+		
+		return view;
+		
+	}
+	
+	@PostMapping("remover")
+	public ModelAndView removerEstoque(Integer idEstoque, RedirectAttributes redirectAttributes) {
+		
+		ModelAndView view = new ModelAndView("redirect:lista");
+		
+		estoqueDao.delete(idEstoque);
+		
+		redirectAttributes.addFlashAttribute("mensagem", "Estoque Removido com sucesso");
+		
+		return view;
+		
+	}
+	
 }
