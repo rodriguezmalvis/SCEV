@@ -27,6 +27,7 @@ public class EstoqueController {
 		view.addObject("estoque", new Estoque());
 		view.addObject("tiposEstoque", TipoEstoque.values());
 		
+		
 		return view;
 		
 	}
