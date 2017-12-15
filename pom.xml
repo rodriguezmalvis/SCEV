@@ -6,7 +6,7 @@
 	<groupId>br.com</groupId>
 	<artifactId>scev</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>scev</name>
 	<description>Sistema de Cadastro de Estoque e Vendas</description>
