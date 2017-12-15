@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head th:replace="template :: head">
+<meta charset="UTF-8"/>
+</head>
+<body>
+	
+	<div layout:fragment="corpo">
+		<form th:action="@{/estoque/cadastra}" th:object="${estoque}" method="post">
+			<div class="form-row">
+			    <div class="form-group col-md-6">
+			      <label for="nome">Nome do Estoque</label>
+			      <input type="text" class="form-control" th:field="*{nome}" id="nome" placeholder="Email"/>
+			    </div>
+			    <div class="form-group col-md-6">
+			      <label for="tipo">Tipo de Estoque</label>
+			      <select class="form-control" th:field="*{tipo}">
+			      	<option th:each=" tipoEstoque,iterationStatus : ${tiposEstoque} " th:value="${tipoEstoque}" th:text="${tipoEstoque}"></option>
+			      </select>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="descricao">Descrição</label>
+			    <textarea class="form-control" th:field="*{descricao}" id="descricao"></textarea>
+			  </div>
+			<button type="submit" class="btn btn-primary">Cadastrar Estoque</button>
+		</form>
+	</div>
+	
+</body>
+</html>
