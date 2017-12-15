@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head th:replace="template :: head">
+<meta charset="UTF-8"/>
+</head>
+<body>
+	
+	<div layout:fragment="corpo">
+		<form th:action="@{/produto/cadastra}" th:object="${produto}" method="post">
+			<input type="hidden" class="form-control" th:field="*{idProduto}"/>
+			<div class="form-row">
+			    <div class="form-group col-md-3">
+			      <label for="titulo">Título</label>
+			      <input type="text" class="form-control" th:field="*{titulo}" id="titulo"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="autor">Autor</label>
+			      <input type="text" class="form-control" th:field="*{autor}" id="autor"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="paginas">Paginas</label>
+			      <input type="text" class="form-control" th:field="*{paginas}" id="paginas"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="formato">Formato</label>
+			      <input type="text" class="form-control" th:field="*{formato}" id="formato"/>
+			    </div>
+			  </div>
+			  <div class="form-row">
+			    <div class="form-group col-md-3">
+			      <label for="isbn">ISBN</label>
+			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="preco">Preço</label>
+			      <input type="text" class="form-control" th:field="*{preco}" id="preco"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			      <label for="contato">Contato</label>
+			      <input type="text" class="form-control" th:field="*{contato}" id="contato"/>
+			    </div>
+			    <div class="form-group col-md-3">
+			       <label for="exampleInputFile">foto</label>
+				   <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label for="descricao">Sinopse</label>
+			    <textarea class="form-control" th:field="*{sinopse}" id="sinopse"></textarea>
+			  </div>
+			  <div class="form-group">
+				<select class="custom-select" th:field="*{estoque.idEstoque}">
+				  <option th:if="${produto.estoque.idEstoque}" th:value="${produto.estoque.idEstoque}" th:text="${estoque.nome}"></option>
+				  <option th:each="estoque,iterationStatus : ${estoques}" th:value="${estoque.idEstoque}" th:text="${estoque.nome}"></option>
+				</select>
+			  </div>
+			<button type="submit" class="btn btn-success">Cadastrar Produto</button>
+		</form>
+	</div>
+	
+</body>
+</html>
