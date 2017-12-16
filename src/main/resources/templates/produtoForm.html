@@ -8,7 +8,7 @@ layout:decorator="template">
 <body>
 	
 	<div layout:fragment="corpo">
-		<form th:action="@{/produto/cadastra}" th:object="${produto}" method="post">
+		<form th:action="@{/produto/cadastra}" th:object="${produto}" method="post" enctype="multipart/form-data">
 			<input type="hidden" class="form-control" th:field="*{idProduto}"/>
 			<div class="form-row">
 			    <div class="form-group col-md-3">
@@ -29,32 +29,42 @@ layout:decorator="template">
 			    </div>
 			  </div>
 			  <div class="form-row">
-			    <div class="form-group col-md-3">
+			    <div class="form-group col-md-4">
 			      <label for="isbn">ISBN</label>
 			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn"/>
 			    </div>
-			    <div class="form-group col-md-3">
+			    <div class="form-group col-md-4">
 			      <label for="preco">Preço</label>
 			      <input type="text" class="form-control" th:field="*{preco}" id="preco"/>
 			    </div>
-			    <div class="form-group col-md-3">
+			    <div class="form-group col-md-4">
 			      <label for="contato">Contato</label>
 			      <input type="text" class="form-control" th:field="*{contato}" id="contato"/>
 			    </div>
-			    <div class="form-group col-md-3">
-			       <label for="exampleInputFile">foto</label>
-				   <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp"/>
-			    </div>
+			  </div>
+			  <div class="form-row">
+			      <div class="form-group col-md-4">
+				       <label for="file">foto</label>
+					   <input type="file" class="form-control-file" id="file" name="file"/>
+				  </div>
+				  <div class="form-group col-md-4">
+				  		<label for="estoque">Estoque</label>
+				    	<select id="estoque" class="form-control" th:field="*{estoque.idEstoque}">
+						  <option th:if="${produto.estoque.idEstoque}" th:value="${produto.estoque.idEstoque}" th:text="${estoque.nome}"></option>
+						  <option th:each="estoque,iterationStatus : ${estoques}" th:value="${estoque.idEstoque}" th:text="${estoque.nome}"></option>
+						</select>
+				  </div>
+				  <div class="form-group col-md-4">
+				  		<label for="tipo">Tipo Produto</label>
+				    	<select id="tipo" class="form-control" th:field="*{tipo}">
+				    	  <option th:if="${produto.tipo}" th:value="${produto.tipo}" th:text="${produto.tipo}"></option>
+						  <option th:each="tipo,iterationStatus : ${tipos}" th:value="${tipo}" th:text="${tipo}"></option>
+						</select>
+				  </div>
 			  </div>
 			  <div class="form-group">
 			    <label for="descricao">Sinopse</label>
 			    <textarea class="form-control" th:field="*{sinopse}" id="sinopse"></textarea>
-			  </div>
-			  <div class="form-group">
-				<select class="custom-select" th:field="*{estoque.idEstoque}">
-				  <option th:if="${produto.estoque.idEstoque}" th:value="${produto.estoque.idEstoque}" th:text="${estoque.nome}"></option>
-				  <option th:each="estoque,iterationStatus : ${estoques}" th:value="${estoque.idEstoque}" th:text="${estoque.nome}"></option>
-				</select>
 			  </div>
 			<button type="submit" class="btn btn-success">Cadastrar Produto</button>
 		</form>

@@ -2,6 +2,7 @@ package br.com.scev.models;
 
 public enum TipoProduto {
 	
-	Livro
+	Livro,
+	Revista
 
 }

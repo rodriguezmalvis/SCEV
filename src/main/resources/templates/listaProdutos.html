@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head th:replace="template :: head">
+<meta charset="UTF-8"/>
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<br/>
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Cod Produto</th>
+		      <th scope="col">Foto</th>
+		      <th scope="col">Titulo</th>
+		      <th scope="col">Autor</th>
+		      <th scope="col">Sinopse</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="produto,iterationStatus : ${produtos}">
+		      <th th:text="${produto.idProduto}" scope="row"></th>
+		      <td><img th:alt="${produto.titulo}" th:src="${produto.urlFoto}" width="60px" height="60px"/></td>
+		      <td th:text="${produto.titulo}"></td>
+		      <td th:text="${produto.autor}"></td>
+		      <td th:text="${produto.sinopse}"></td>
+		      <td><a th:href="@{/produto/ficha}+${produto.idProduto}">Ver Ficha</a></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>
