@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorator="template">
+<head th:replace="template :: head">
+<meta charset="UTF-8"/>
+</head>
+<body>
+	<div layout:fragment="corpo">
+		<br/>
+		<table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">Cod Movimentação</th>
+		      <th scope="col">Descrição</th>
+		      <th scope="col">Estoque</th>
+		      <th scope="col">Produto</th>
+		      <th scope="col">Quantidade</th>
+		      <th scope="col">Tipo</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="movimentacao,iterationStatus : ${movimentacoes}">
+		      <th th:text="${movimentacao.idMovimentacao}" scope="row"></th>
+		      <td th:text="${movimentacao.descricao}"></td>
+		      <td th:text="${movimentacao.estoque.nome}"></td>
+		      <td th:text="${movimentacao.produto.titulo}"></td>
+		      <td th:text="${movimentacao.quantidade}"></td>
+		      <td th:text="${movimentacao.tipo}"></td>
+		    </tr>
+		  </tbody>
+		</table>
+	</div>
+</body>
+</html>

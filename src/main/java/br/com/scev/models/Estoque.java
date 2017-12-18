@@ -1,6 +1,5 @@
 package br.com.scev.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -20,8 +19,17 @@ public class Estoque {
 	private TipoEstoque tipo;
 	
 	@OneToMany(mappedBy="estoque")
-	List<Produto> produtos = new ArrayList<>();
+	private List<ProdutoEstoque> produtosEstoque;
 	
+	@OneToMany(mappedBy="estoque")
+	private List<Movimentacao> movimentacoes;
+	
+	public List<ProdutoEstoque> getProdutosEstoque() {
+		return produtosEstoque;
+	}
+	public void setProdutosEstoque(List<ProdutoEstoque> produtosEstoque) {
+		this.produtosEstoque = produtosEstoque;
+	}
 	public Integer getIdEstoque() {
 		return idEstoque;
 	}

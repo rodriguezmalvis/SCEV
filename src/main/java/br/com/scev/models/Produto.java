@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class Produto {
@@ -27,21 +25,11 @@ public class Produto {
 	private Integer quantidade;
 	private String UrlFoto;
 	
-	@ManyToOne
-	@JoinColumn(name="id_estoque",nullable=false)
-	Estoque estoque;
-	
 	public String getUrlFoto() {
 		return UrlFoto;
 	}
 	public void setUrlFoto(String urlFoto) {
 		UrlFoto = urlFoto;
-	}
-	public Estoque getEstoque() {
-		return estoque;
-	}
-	public void setEstoque(Estoque estoque) {
-		this.estoque = estoque;
 	}
 	public Integer getIdProduto() {
 		return idProduto;

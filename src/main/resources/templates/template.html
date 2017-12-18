@@ -23,7 +23,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	    <ul class="navbar-nav">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Estoque
+	          Estoques
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	          <a class="dropdown-item" th:href="@{/estoque/form}">Cadastrar Estoque</a>
@@ -34,11 +34,22 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	    <ul class="navbar-nav">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	          Produto
+	          Produtos
 	        </a>
 	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 	          <a class="dropdown-item" th:href="@{/produto/form}">Cadastrar Produto</a>
 	          <a class="dropdown-item" th:href="@{/produto/lista}">Lista de Produtos</a>
+	        </div>
+	      </li>
+	    </ul>
+	    <ul class="navbar-nav">
+	      <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	          Movimentações
+	        </a>
+	        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+	          <a class="dropdown-item" th:href="@{/movimentacao/form}">Cadastrar Movimentação</a>
+	          <a class="dropdown-item" th:href="@{/movimentacao/lista}">Lista de Movimentações</a>
 	        </div>
 	      </li>
 	    </ul>
