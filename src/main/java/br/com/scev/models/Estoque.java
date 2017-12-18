@@ -1,5 +1,6 @@
 package br.com.scev.models;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -23,6 +24,20 @@ public class Estoque {
 	
 	@OneToMany(mappedBy="estoque")
 	private List<Movimentacao> movimentacoes;
+	
+	public BigInteger getQuantidadeProdutos() {
+		
+		BigInteger quantidade;
+		
+		try {
+			quantidade = this.produtosEstoque.stream().map(ProdutoEstoque::getQuantidade).reduce(BigInteger::add).get();
+		} catch (Exception e) {
+			quantidade = BigInteger.ZERO;
+		}
+		
+		return quantidade;
+		
+	}
 	
 	public List<ProdutoEstoque> getProdutosEstoque() {
 		return produtosEstoque;

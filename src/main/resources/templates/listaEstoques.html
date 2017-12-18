@@ -24,7 +24,7 @@ layout:decorator="template">
 		      <th th:text="${estoque.idEstoque}" scope="row"></th>
 		      <td th:text="${estoque.nome}"></td>
 		      <td th:text="${estoque.descricao}"></td>
-		      <td>0000</td>
+		      <td th:text="${estoque.quantidadeProdutos}"></td>
 		      <td><a th:href="@{/estoque/produtos}+${estoque.idEstoque}">Ver Produtos</a></td>
 		      <td>
 		      	<div class="row">
