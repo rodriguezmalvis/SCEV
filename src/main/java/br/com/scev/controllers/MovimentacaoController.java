@@ -1,5 +1,8 @@
 package br.com.scev.controllers;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -102,7 +105,11 @@ public class MovimentacaoController {
 		
 		ModelAndView view = new ModelAndView("listaMovimentacoes");
 		
-		view.addObject("movimentacoes", movimentacaoDao.findAll());
+		List<Movimentacao> movimentacoes = movimentacaoDao.findAll();
+		
+		Collections.sort(movimentacoes,(p1,p2) -> p2.getIdMovimentacao().compareTo(p1.getIdMovimentacao()));
+		
+		view.addObject("movimentacoes", movimentacoes);
 		
 		return view;
 		
