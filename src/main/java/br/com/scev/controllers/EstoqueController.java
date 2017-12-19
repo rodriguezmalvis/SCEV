@@ -21,13 +21,11 @@ public class EstoqueController {
 	EstoqueDao estoqueDao;
 
 	@GetMapping("form")
-	public ModelAndView estoqueForm() {
+	public ModelAndView estoqueForm(Estoque estoque) {
 		
 		ModelAndView view = new ModelAndView("estoqueForm");
 		
-		view.addObject("estoque", new Estoque());
 		view.addObject("tiposEstoque", TipoEstoque.values());
-		
 		
 		return view;
 		

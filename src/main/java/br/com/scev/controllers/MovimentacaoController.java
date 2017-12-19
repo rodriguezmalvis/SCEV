@@ -41,11 +41,10 @@ public class MovimentacaoController {
 	private RegrasMovimentacao regrasMov;
 
 	@GetMapping("form")
-	public ModelAndView movimentacaoForm() {
+	public ModelAndView movimentacaoForm(Movimentacao movimentacao) {
 		
 		ModelAndView view = new ModelAndView("movimentacaoForm");
 		
-		view.addObject("movimentacao", new Movimentacao());
 		view.addObject("tipoMovimentacao", TipoMovimentacao.values());
 		view.addObject("produtos",produtoDao.findAll());
 		view.addObject("estoques",estoqueDao.findAll());
@@ -55,11 +54,10 @@ public class MovimentacaoController {
 	}
 	
 	@GetMapping("transferenciaForm")
-	public ModelAndView tranferenciaForm() {
+	public ModelAndView tranferenciaForm(TransferenciaEstoque transferenciaEstoque) {
 		
 		ModelAndView view = new ModelAndView("transferenciaForm");
 		
-		view.addObject("transferenciaEstoque", new TransferenciaEstoque());
 		view.addObject("tipoMovimentacao", TipoMovimentacao.Saida);
 		view.addObject("produtos",produtoDao.findAll());
 		view.addObject("estoques",estoqueDao.findAll());

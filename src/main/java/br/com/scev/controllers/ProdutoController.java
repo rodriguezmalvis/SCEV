@@ -5,7 +5,9 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +19,7 @@ import br.com.scev.models.TipoProduto;
 import br.com.scev.negocio.FileUploader;
 import br.com.scev.repos.EstoqueDao;
 import br.com.scev.repos.ProdutoDao;
+import br.com.scev.validators.ProdutoValidator;
 
 @Controller
 @RequestMapping("produto")
@@ -30,7 +33,12 @@ public class ProdutoController {
 	
 	@Autowired
 	FileUploader uploader;
-
+	
+	@InitBinder
+	public void InitBinder(WebDataBinder binder){
+		binder.addValidators(new ProdutoValidator());
+	}
+	
 	@GetMapping("form")
 	public ModelAndView produtoForm(Produto produto) {
 		
