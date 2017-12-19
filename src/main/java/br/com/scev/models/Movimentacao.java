@@ -26,10 +26,22 @@ public class Movimentacao implements Serializable {
 	@JoinColumn(name="id_estoque",nullable=false)
 	private Estoque estoque;
 	
-	
 	@ManyToOne
 	@JoinColumn(name="id_produto",nullable=false)
 	private Produto produto;
+	
+	public Movimentacao(TipoMovimentacao tipo, String descricao, BigInteger quantidade, Estoque estoque,
+			Produto produto) {
+		super();
+		this.tipo = tipo;
+		this.descricao = descricao;
+		this.quantidade = quantidade;
+		this.estoque = estoque;
+		this.produto = produto;
+	}
+	
+	public Movimentacao() {
+	}
 	
 	public Estoque getEstoque() {
 		return estoque;

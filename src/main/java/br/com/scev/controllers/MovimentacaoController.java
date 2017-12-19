@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.scev.models.Movimentacao;
 import br.com.scev.models.ProdutoEstoque;
 import br.com.scev.models.TipoMovimentacao;
+import br.com.scev.models.TransferenciaEstoque;
+import br.com.scev.negocio.RegrasMovimentacao;
 import br.com.scev.repos.EstoqueDao;
 import br.com.scev.repos.MovimentacaoDao;
 import br.com.scev.repos.ProdutoDao;
@@ -34,6 +36,9 @@ public class MovimentacaoController {
 	
 	@Autowired
 	private ProdutoEstoqueDao produtoEstoqueDao;
+	
+	@Autowired
+	private RegrasMovimentacao regrasMov;
 
 	@GetMapping("form")
 	public ModelAndView movimentacaoForm() {
@@ -49,23 +54,64 @@ public class MovimentacaoController {
 		
 	}
 	
+	@GetMapping("transferenciaForm")
+	public ModelAndView tranferenciaForm() {
+		
+		ModelAndView view = new ModelAndView("transferenciaForm");
+		
+		view.addObject("transferenciaEstoque", new TransferenciaEstoque());
+		view.addObject("tipoMovimentacao", TipoMovimentacao.Saida);
+		view.addObject("produtos",produtoDao.findAll());
+		view.addObject("estoques",estoqueDao.findAll());
+		
+		return view;
+		
+	}
+	
+	@PostMapping("transfere")
+	public ModelAndView tranfereEstoque(TransferenciaEstoque transferencia) {
+		
+		ModelAndView view = new ModelAndView("redirect:transferenciaForm");
+		
+		List<Movimentacao> movimentaçoes = transferencia.getMovimentaçoes();
+		
+		ProdutoEstoque produtoEstoque = 
+				produtoEstoqueDao.findByEstoqueProduto(transferencia.getOrigem().getIdEstoque(), transferencia.getProduto().getIdProduto());
+		
+		boolean hasErro = regrasMov.verificaEstoqueMovimentacao(movimentaçoes.get(0), view, produtoEstoque);
+		
+		if(hasErro) {
+			transferencia.setProduto(produtoDao.findOne(transferencia.getProduto().getIdProduto()));
+			transferencia.setOrigem(estoqueDao.findOne(transferencia.getOrigem().getIdEstoque()));
+			transferencia.setDestino(estoqueDao.findOne(transferencia.getDestino().getIdEstoque()));
+			view.setViewName("transferenciaForm");
+			view.addObject("transferenciaEstoque",transferencia);
+			view.addObject("produtos",produtoDao.findAll());
+			view.addObject("estoques",estoqueDao.findAll());
+			view.addObject("tipoMovimentacao", TipoMovimentacao.Saida);
+		}else {
+			
+			transferencia.getMovimentaçoes().stream().forEach(m -> {
+				ProdutoEstoque produtoEstoqueMovimentacao = 
+						produtoEstoqueDao.findByEstoqueProduto(m.getEstoque().getIdEstoque(), m.getProduto().getIdProduto());
+				regrasMov.realizaMovimentacao(m, produtoEstoqueMovimentacao);
+			});
+			
+		}
+		
+		return view;
+		
+	}
+	
 	@PostMapping("cadastra")
 	public ModelAndView cadastraMovimentacao(Movimentacao movimentacao, RedirectAttributes redirectAttributes) {
 		
 		ModelAndView view = new ModelAndView("redirect:form");
-		boolean hasErro = false;	
 		
 		ProdutoEstoque produtoEstoque = 
 				produtoEstoqueDao.findByEstoqueProduto(movimentacao.getEstoque().getIdEstoque(), movimentacao.getProduto().getIdProduto());
 				
-		if(produtoEstoque == null && movimentacao.getTipo() == TipoMovimentacao.Saida) {
-			view.addObject("alerta", "Estoque selecionado não tem itens para o tipo de movimentação");
-			hasErro = true;
-		}else if(movimentacao.getTipo() == TipoMovimentacao.Saida && (produtoEstoque.getQuantidade().intValue() < movimentacao.getQuantidade().intValue())) {
-			view.addObject("alerta", "Estoque selecionado não tem itens suficientes para o tipo de movimentação."
-					+ " Movimentação: "+movimentacao.getQuantidade().intValue()+" / Estoque: "+produtoEstoque.getQuantidade().intValue());
-			hasErro = true;
-		}
+		boolean hasErro = regrasMov.verificaEstoqueMovimentacao(movimentacao, view, produtoEstoque);
 			
 		if(hasErro) {
 			movimentacao.setProduto(produtoDao.findOne(movimentacao.getProduto().getIdProduto()));
@@ -77,21 +123,8 @@ public class MovimentacaoController {
 			view.addObject("tipoMovimentacao", TipoMovimentacao.values());
 		}else {
 			
-			if(produtoEstoque == null) {
-				produtoEstoque = new ProdutoEstoque(movimentacao.getQuantidade(), movimentacao.getEstoque(), movimentacao.getProduto());
-				produtoEstoqueDao.save(produtoEstoque);
-			}else {
-				
-				if(movimentacao.getTipo() == TipoMovimentacao.Saida) {
-					produtoEstoque.setQuantidade(produtoEstoque.getQuantidade().subtract(movimentacao.getQuantidade()));
-				}else {
-					produtoEstoque.setQuantidade(produtoEstoque.getQuantidade().add(movimentacao.getQuantidade()));
-				}
-				
-				produtoEstoqueDao.save(produtoEstoque);
-			}
+			regrasMov.realizaMovimentacao(movimentacao, produtoEstoque);
 			
-			movimentacaoDao.save(movimentacao);
 			redirectAttributes.addFlashAttribute("mensagem", "Movimentação cadastrada com sucesso");
 		}
 			
