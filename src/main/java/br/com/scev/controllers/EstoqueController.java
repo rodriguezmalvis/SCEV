@@ -3,6 +3,7 @@ package br.com.scev.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,6 +77,28 @@ public class EstoqueController {
 		estoqueDao.delete(idEstoque);
 		
 		redirectAttributes.addFlashAttribute("mensagem", "Estoque Removido com sucesso");
+		
+		return view;
+		
+	}
+	
+	@GetMapping("produtos/{idEstoque}")
+	public ModelAndView listaProdutosEstoque(@PathVariable Integer idEstoque) {
+		
+		ModelAndView view = new ModelAndView("produtosEstoque");
+		
+		view.addObject("produtos", estoqueDao.findOne(idEstoque).getProdutosEstoque());
+		
+		return view;
+		
+	}
+	
+	@GetMapping("movimentacoes/{idEstoque}")
+	public ModelAndView listaMovimentacoesEstoque(@PathVariable Integer idEstoque) {
+		
+		ModelAndView view = new ModelAndView("movimentacoesEstoque");
+		
+		view.addObject("movimentacoes", estoqueDao.findOne(idEstoque).getMovimentacoes());
 		
 		return view;
 		

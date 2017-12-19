@@ -17,6 +17,7 @@ layout:decorator="template">
 		      <th scope="col">Total Produtos</th>
 		      <th scope="col"></th>
 		      <th scope="col"></th>
+		      <th scope="col"></th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -25,7 +26,8 @@ layout:decorator="template">
 		      <td th:text="${estoque.nome}"></td>
 		      <td th:text="${estoque.descricao}"></td>
 		      <td th:text="${estoque.quantidadeProdutos}"></td>
-		      <td><a th:href="@{/estoque/produtos}+${estoque.idEstoque}">Ver Produtos</a></td>
+		      <td><a th:href="@{/estoque/produtos/}+${estoque.idEstoque}">Ver Produtos</a></td>
+		      <td><a th:href="@{/estoque/movimentacoes/}+${estoque.idEstoque}">Ver Movimentações</a></td>
 		      <td>
 		      	<div class="row">
 					<div class="col text-right">

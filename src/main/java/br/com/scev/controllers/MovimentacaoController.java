@@ -12,6 +12,7 @@ import br.com.scev.models.Movimentacao;
 import br.com.scev.models.ProdutoEstoque;
 import br.com.scev.models.TipoMovimentacao;
 import br.com.scev.repos.EstoqueDao;
+import br.com.scev.repos.MovimentacaoDao;
 import br.com.scev.repos.ProdutoDao;
 import br.com.scev.repos.ProdutoEstoqueDao;
 

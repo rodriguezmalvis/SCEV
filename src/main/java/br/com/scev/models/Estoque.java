@@ -39,6 +39,12 @@ public class Estoque {
 		
 	}
 	
+	public List<Movimentacao> getMovimentacoes() {
+		return movimentacoes;
+	}
+	public void setMovimentacoes(List<Movimentacao> movimentacoes) {
+		this.movimentacoes = movimentacoes;
+	}
 	public List<ProdutoEstoque> getProdutosEstoque() {
 		return produtosEstoque;
 	}

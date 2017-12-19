@@ -8,8 +8,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = {
+		@UniqueConstraint(columnNames= {
+				"id_estoque",
+				"id_produto"
+		})
+})
 public class ProdutoEstoque {
 	
 	@Id
@@ -19,11 +27,11 @@ public class ProdutoEstoque {
 	private BigInteger quantidade;
 	
 	@ManyToOne
-	@JoinColumn(name="id_estoque",nullable=false,unique=true)
+	@JoinColumn(name="id_estoque",nullable=false)
 	private Estoque estoque;
 	
 	@ManyToOne
-	@JoinColumn(name="id_produto",nullable=false,unique=true)
+	@JoinColumn(name="id_produto",nullable=false)
 	private Produto produto;
 	
 	public ProdutoEstoque() {
@@ -58,6 +66,14 @@ public class ProdutoEstoque {
 
 	public void setQuantidade(BigInteger quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
 	}
 	
 }
