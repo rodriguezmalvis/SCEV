@@ -25,18 +25,18 @@ layout:decorator="template">
 			    </div>
 			  </div>
 			  <div class="form-row">
+			  	<div class="form-group col-md-6">
+			      <label for="tipo">Estoque</label>
+			      <select class="form-control" th:field="*{estoque.idEstoque}">
+			      	<option th:if="${movimentacao.estoque.idEstoque}" th:value="${movimentacao.estoque.idEstoque}" th:text="${movimentacao.estoque.nome}"></option>
+			      	<option th:each=" estoque,iterationStatus : ${estoques} " th:value="${estoque.idEstoque}" th:text="${estoque.nome}"></option>
+			      </select>
+			    </div>
 			    <div class="form-group col-md-6">
 			      <label for="nome">Produto</label>
 			      <select class="form-control" th:field="*{produto.idProduto}">
 			      	<option th:if="${movimentacao.produto.idProduto}" th:value="${movimentacao.produto.idProduto}" th:text="${movimentacao.produto.titulo}"></option>
 			      	<option th:each=" produto,iterationStatus : ${produtos} " th:value="${produto.idProduto}" th:text="${produto.titulo}"></option>
-			      </select>
-			    </div>
-			    <div class="form-group col-md-6">
-			      <label for="tipo">Estoque</label>
-			      <select class="form-control" th:field="*{estoque.idEstoque}">
-			      	<option th:if="${movimentacao.estoque.idEstoque}" th:value="${movimentacao.estoque.idEstoque}" th:text="${movimentacao.estoque.nome}"></option>
-			      	<option th:each=" estoque,iterationStatus : ${estoques} " th:value="${estoque.idEstoque}" th:text="${estoque.nome}"></option>
 			      </select>
 			    </div>
 			  </div>
