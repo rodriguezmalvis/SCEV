@@ -9,6 +9,11 @@ layout:decorator="template">
 	
 	<div layout:fragment="corpo">
 		<form th:action="@{/produto/cadastra}" th:object="${produto}" method="post" enctype="multipart/form-data">
+			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
+				<div th:each="detailedError : ${#fields.detailedErrors()}">
+					<span th:text="${detailedError.message}"></span>
+				</div>
+			</div> 
 			<input type="hidden" class="form-control" th:field="*{idProduto}"/>
 			<div class="form-row">
 			    <div class="form-group col-md-3">
@@ -21,7 +26,7 @@ layout:decorator="template">
 			    </div>
 			    <div class="form-group col-md-3">
 			      <label for="paginas">Paginas</label>
-			      <input type="text" class="form-control" th:field="*{paginas}" id="paginas"/>
+			      <input type="number" min="0" class="form-control" th:field="*{paginas}" id="paginas"/>
 			    </div>
 			    <div class="form-group col-md-3">
 			      <label for="formato">Formato</label>
@@ -31,11 +36,11 @@ layout:decorator="template">
 			  <div class="form-row">
 			    <div class="form-group col-md-4">
 			      <label for="isbn">ISBN</label>
-			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn"/>
+			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn" data-masked-input="9999999999999"/>
 			    </div>
 			    <div class="form-group col-md-4">
 			      <label for="preco">Preço</label>
-			      <input type="text" class="form-control" th:field="*{preco}" id="preco"/>
+			      <input type="text" class="form-control" th:field="*{preco}" id="preco" placeholder="00.00" data-masked-input="99.99"/>
 			    </div>
 			    <div class="form-group col-md-4">
 			      <label for="contato">Contato</label>

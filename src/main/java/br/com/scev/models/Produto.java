@@ -22,7 +22,7 @@ public class Produto {
 	private BigDecimal preco;
 	private String contato;
 	private String sinopse;
-	private Integer quantidade;
+	
 	private String UrlFoto;
 	
 	public String getUrlFoto() {
@@ -90,12 +90,6 @@ public class Produto {
 	}
 	public void setSinopse(String sinopse) {
 		this.sinopse = sinopse;
-	}
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
 	}
 	
 	

@@ -1,7 +1,10 @@
 package br.com.scev.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +32,10 @@ public class ProdutoController {
 	FileUploader uploader;
 
 	@GetMapping("form")
-	public ModelAndView produtoForm() {
+	public ModelAndView produtoForm(Produto produto) {
 		
 		ModelAndView view = new ModelAndView("produtoForm");
 		
-		view.addObject("produto", new Produto());
 		view.addObject("estoques",estoqueDao.findAll());
 		view.addObject("tipos",TipoProduto.values());
 		
@@ -42,7 +44,12 @@ public class ProdutoController {
 	}
 	
 	@PostMapping("cadastra")
-	public ModelAndView cadastraProduto(MultipartFile file, Produto produto, RedirectAttributes redirectAttributes) {
+	public ModelAndView cadastraProduto(@Valid Produto produto, BindingResult result,
+			MultipartFile file, RedirectAttributes redirectAttributes) {
+		
+		if(result.hasErrors()) {
+			return produtoForm(produto);
+		}
 		
 		ModelAndView view = new ModelAndView("redirect:form");
 		
