@@ -72,7 +72,6 @@ layout:decorator="template">
 				  <div class="form-group col-md-4">
 				  		<label for="tipo">Tipo Produto</label>
 				    	<select id="tipo" class="form-control" th:field="*{tipo}">
-				    	  <option th:if="${produto.tipo}" th:value="${produto.tipo}" th:text="${produto.tipo}"></option>
 						  <option th:each="tipo,iterationStatus : ${tipos}" th:value="${tipo}" th:text="${tipo}"></option>
 						</select>
 				  </div>

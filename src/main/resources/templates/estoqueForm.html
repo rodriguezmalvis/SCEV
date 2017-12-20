@@ -28,7 +28,6 @@ layout:decorator="template">
 			    <div class="form-group col-md-6">
 			      <label for="tipo">Tipo de Estoque</label>
 			      <select class="form-control" th:field="*{tipo}">
-			      	<option th:if="${estoque.tipo}" th:value="${estoque.tipo}" th:text="${estoque.tipo}"></option>
 			      	<option th:each=" tipoEstoque,iterationStatus : ${tiposEstoque} " th:value="${tipoEstoque}" th:text="${tipoEstoque}"></option>
 			      </select>
 			    </div>

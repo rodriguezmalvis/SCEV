@@ -38,20 +38,18 @@ public class RegrasMovimentacao {
 		movimentacaoDao.save(movimentacao);
 	}
 
-	public boolean verificaEstoqueMovimentacao(Movimentacao movimentacao, ModelAndView view, ProdutoEstoque produtoEstoque) {
+	public String verificaEstoqueMovimentacao(Movimentacao movimentacao, ProdutoEstoque produtoEstoque) {
 		
-		boolean hasErro = false;
+		String erro = "";
 		
 		if(produtoEstoque == null && movimentacao.getTipo() == TipoMovimentacao.Saida) {
-			view.addObject("alerta", "Estoque selecionado não tem itens para o tipo de movimentação");
-			hasErro = true;
+			erro = "Estoque selecionado não tem itens para o tipo de movimentação";
 		}else if(movimentacao.getTipo() == TipoMovimentacao.Saida && (produtoEstoque.getQuantidade().intValue() < movimentacao.getQuantidade().intValue())) {
-			view.addObject("alerta", "Estoque selecionado não tem itens suficientes para o tipo de movimentação."
-					+ " Movimentação: "+movimentacao.getQuantidade().intValue()+" / Estoque: "+produtoEstoque.getQuantidade().intValue());
-			hasErro = true;
+			erro = "Estoque selecionado não tem itens suficientes para o tipo de movimentação."
+					+ " Movimentação: "+movimentacao.getQuantidade().intValue()+" / Estoque: "+produtoEstoque.getQuantidade().intValue();
 		}
 		
-		return hasErro;
+		return erro;
 	}
 	
 }
