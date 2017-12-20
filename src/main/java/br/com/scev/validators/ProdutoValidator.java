@@ -25,7 +25,11 @@ public class ProdutoValidator implements Validator{
 		ValidationUtils.rejectIfEmpty(erros, "contato", "field.required");
 		ValidationUtils.rejectIfEmpty(erros, "sinopse", "field.required");
 		
-		Produto produto = (Produto) target;
+		/*Produto produto = (Produto) target;
+		
+		if(produto.getPaginas() <= 0){
+			erros.rejectValue("paginas", "field.required");
+		}*/
 		
 	}
 

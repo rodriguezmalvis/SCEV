@@ -3,9 +3,14 @@ package br.com.scev.controllers;
 import java.util.Collections;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,6 +25,8 @@ import br.com.scev.repos.EstoqueDao;
 import br.com.scev.repos.MovimentacaoDao;
 import br.com.scev.repos.ProdutoDao;
 import br.com.scev.repos.ProdutoEstoqueDao;
+import br.com.scev.validators.EstoqueValidator;
+import br.com.scev.validators.MovimentacaoValidator;
 
 @Controller
 @RequestMapping("movimentacao")
@@ -39,6 +46,11 @@ public class MovimentacaoController {
 	
 	@Autowired
 	private RegrasMovimentacao regrasMov;
+	
+	@InitBinder
+	public void InitBinder(WebDataBinder binder){
+		binder.addValidators(new MovimentacaoValidator());
+	}
 
 	@GetMapping("form")
 	public ModelAndView movimentacaoForm(Movimentacao movimentacao) {
@@ -102,7 +114,11 @@ public class MovimentacaoController {
 	}
 	
 	@PostMapping("cadastra")
-	public ModelAndView cadastraMovimentacao(Movimentacao movimentacao, RedirectAttributes redirectAttributes) {
+	public ModelAndView cadastraMovimentacao(@Valid Movimentacao movimentacao,BindingResult result, RedirectAttributes redirectAttributes) {
+		
+		if(result.hasErrors()) {
+			return movimentacaoForm(movimentacao);
+		}
 		
 		ModelAndView view = new ModelAndView("redirect:form");
 		
