@@ -6,7 +6,9 @@ layout:decorator="template">
 <meta charset="UTF-8"/>
 </head>
 <body>
-	
+	<div layout:fragment="jumbotron">
+		<h2 th:text="#{estoque.cabecalho}"></h2>
+	</div>
 	<div layout:fragment="corpo">
 		<form th:action="@{/estoque/cadastra}" th:object="${estoque}" method="post">
 		

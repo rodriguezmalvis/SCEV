@@ -67,7 +67,7 @@ public class TransferenciaController {
 			return tranferenciaForm(transferencia);
 		}
 		
-		ModelAndView view = new ModelAndView("redirect:transferenciaForm");
+		ModelAndView view = new ModelAndView("redirect:form");
 		
 		List<Movimentacao> movimentaçoes = transferencia.getMovimentaçoes();
 		

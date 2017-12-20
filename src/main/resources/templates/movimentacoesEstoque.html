@@ -6,6 +6,11 @@ layout:decorator="template">
 <meta charset="UTF-8"/>
 </head>
 <body>
+
+	<div layout:fragment="jumbotron">
+		<h2 th:text="#{estoque.movimentacoes}+${estoque.nome}"></h2>
+	</div>
+
 	<div layout:fragment="corpo">
 		<br/>
 		<table class="table table-striped">
@@ -20,7 +25,7 @@ layout:decorator="template">
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr th:each="movimentacao,iterationStatus : ${movimentacoes}">
+		    <tr th:each="movimentacao,iterationStatus : ${estoque.movimentacoes}">
 		      <th th:text="${movimentacao.idMovimentacao}" scope="row"></th>
 		      <td th:text="${movimentacao.descricao}"></td>
 		      <td th:text="${movimentacao.estoque.nome}"></td>

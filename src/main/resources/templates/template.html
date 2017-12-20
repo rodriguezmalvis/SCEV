@@ -69,7 +69,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<div class="container-fluid">
 	
 		<div class="jumbotron text-center">
-			<h2> Sistema de Cadastro de Estoque e Vendas </h2>
+			<section layout:fragment="jumbotron">
+			</section>
 		</div>
 		
 		<div th:if="${mensagem}" class="alert alert-success alert-dismissible fade show" role="alert">

@@ -6,6 +6,11 @@ layout:decorator="template">
 <meta charset="UTF-8"/>
 </head>
 <body>
+
+	<div layout:fragment="jumbotron">
+		<h2 th:text="#{movimentacao.lista}"></h2>
+	</div>
+
 	<div layout:fragment="corpo">
 		<br/>
 		<table class="table table-striped">

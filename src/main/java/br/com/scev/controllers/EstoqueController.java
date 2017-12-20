@@ -1,5 +1,7 @@
 package br.com.scev.controllers;
 
+import java.util.Collections;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +102,7 @@ public class EstoqueController {
 		
 		ModelAndView view = new ModelAndView("produtosEstoque");
 		
-		view.addObject("produtos", estoqueDao.findOne(idEstoque).getProdutosEstoque());
+		view.addObject("estoque", estoqueDao.findOne(idEstoque));
 		
 		return view;
 		
@@ -111,7 +113,11 @@ public class EstoqueController {
 		
 		ModelAndView view = new ModelAndView("movimentacoesEstoque");
 		
-		view.addObject("movimentacoes", estoqueDao.findOne(idEstoque).getMovimentacoes());
+		Estoque estoque = estoqueDao.findOne(idEstoque);
+		
+		Collections.sort(estoque.getMovimentacoes(),(p1,p2) -> p2.getIdMovimentacao().compareTo(p1.getIdMovimentacao()));
+		
+		view.addObject("estoque", estoque);
 		
 		return view;
 		
