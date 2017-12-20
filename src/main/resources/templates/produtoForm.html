@@ -10,44 +10,58 @@ layout:decorator="template">
 	<div layout:fragment="corpo">
 		<form th:action="@{/produto/cadastra}" th:object="${produto}" method="post" enctype="multipart/form-data">
 		
-			<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-				<div th:each="detailedError : ${#fields.detailedErrors()}">
-					<span th:text="${detailedError.message}"></span>
-				</div>
-			</div> 
+			<div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			  <strong>Alerta!</strong> <span>Existem erros no formulário</span>
+			  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			    <span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
 			
 			<input type="hidden" class="form-control" th:field="*{idProduto}"/>
 			<div class="form-row">
 			    <div class="form-group col-md-3">
 			      <label for="titulo">Título</label>
-			      <input type="text" class="form-control" th:field="*{titulo}" id="titulo"/>
-			      <div th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+			      <input type="text" class="form-control" th:field="*{titulo}" id="titulo" 
+			      		 th:classappend="${#fields.hasErrors('titulo')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
 			    </div>
 			    <div class="form-group col-md-3">
 			      <label for="autor">Autor</label>
-			      <input type="text" class="form-control" th:field="*{autor}" id="autor"/>
+			      <input type="text" class="form-control" th:field="*{autor}" id="autor"
+				  		th:classappend="${#fields.hasErrors('autor')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
 			    </div>
 			    <div class="form-group col-md-3">
 			      <label for="paginas">Paginas</label>
-			      <input type="number" min="0" class="form-control" th:field="*{paginas}" id="paginas"/>
+			      <input type="number" min="0" class="form-control" th:field="*{paginas}" id="paginas"
+			      		th:classappend="${#fields.hasErrors('paginas')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('paginas')}" th:errors="*{paginas}"></div>
 			    </div>
 			    <div class="form-group col-md-3">
 			      <label for="formato">Formato</label>
-			      <input type="text" class="form-control" th:field="*{formato}" id="formato"/>
+			      <input type="text" class="form-control" th:field="*{formato}" id="formato"
+						th:classappend="${#fields.hasErrors('formato')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('formato')}" th:errors="*{formato}"></div>
 			    </div>
 			  </div>
 			  <div class="form-row">
 			    <div class="form-group col-md-4">
 			      <label for="isbn">ISBN</label>
-			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn" data-masked-input="9999999999999"/>
+			      <input type="text" class="form-control" th:field="*{ISBN}" id="isbn" data-masked-input="9999999999999"
+						th:classappend="${#fields.hasErrors('ISBN')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('ISBN')}" th:errors="*{ISBN}"></div>
 			    </div>
 			    <div class="form-group col-md-4">
 			      <label for="preco">Preço</label>
-			      <input type="text" class="form-control" th:field="*{preco}" id="preco" placeholder="00.00" data-masked-input="99.99"/>
+			      <input type="text" class="form-control" th:field="*{preco}" id="preco" placeholder="00.00" data-masked-input="99.99"
+						th:classappend="${#fields.hasErrors('preco')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('preco')}" th:errors="*{preco}"></div>
 			    </div>
 			    <div class="form-group col-md-4">
 			      <label for="contato">Contato</label>
-			      <input type="text" class="form-control" th:field="*{contato}" id="contato"/>
+			      <input type="text" class="form-control" th:field="*{contato}" id="contato"
+						th:classappend="${#fields.hasErrors('contato')} ? is-invalid"/>
+			      <div class="invalid-feedback" th:if="${#fields.hasErrors('contato')}" th:errors="*{contato}"></div>
 			    </div>
 			  </div>
 			  <div class="form-row">
@@ -65,7 +79,9 @@ layout:decorator="template">
 			  </div>
 			  <div class="form-group">
 			    <label for="descricao">Sinopse</label>
-			    <textarea class="form-control" th:field="*{sinopse}" id="sinopse"></textarea>
+			    <textarea class="form-control" th:field="*{sinopse}" id="sinopse" 
+			    		th:classappend="${#fields.hasErrors('sinopse')} ? is-invalid"></textarea>
+			    <div class="invalid-feedback" th:if="${#fields.hasErrors('sinopse')}" th:errors="*{sinopse}"></div>
 			  </div>
 			<button type="submit" class="btn btn-success">Cadastrar Produto</button>
 		</form>
