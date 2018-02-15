@@ -24,7 +24,7 @@ layout:decorator="template">
 		    </tr>
 		  </thead>
 		  <tbody>
-		    <tr th:each="prodEst,iterationStatus : ${produtos}">
+		    <tr th:each="prodEst,iterationStatus : ${estoque.produtosEstoque}">
 		      <th th:text="${prodEst.produto.idProduto}" scope="row"></th>
 		      <td><img th:alt="${prodEst.produto.titulo}" th:src="${prodEst.produto.urlFoto}" width="60px" height="60px"/></td>
 		      <td th:text="${prodEst.produto.titulo}"></td>

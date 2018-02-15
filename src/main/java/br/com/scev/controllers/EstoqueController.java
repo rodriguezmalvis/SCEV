@@ -101,8 +101,8 @@ public class EstoqueController {
 	public ModelAndView listaProdutosEstoque(@PathVariable Integer idEstoque) {
 		
 		ModelAndView view = new ModelAndView("produtosEstoque");
-		
-		view.addObject("estoque", estoqueDao.findOne(idEstoque));
+		Estoque findOne = estoqueDao.findOne(idEstoque);
+		view.addObject("estoque", findOne);
 		
 		return view;
 		
