@@ -11,6 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 @Entity
 @Table(uniqueConstraints = {
 		@UniqueConstraint(columnNames= {
@@ -28,6 +31,7 @@ public class ProdutoEstoque {
 	
 	@ManyToOne
 	@JoinColumn(name="id_estoque",nullable=false)
+	@JsonIgnore
 	private Estoque estoque;
 	
 	@ManyToOne

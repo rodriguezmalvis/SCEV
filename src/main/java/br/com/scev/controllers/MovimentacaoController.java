@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,17 +20,16 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.com.scev.models.Movimentacao;
 import br.com.scev.models.ProdutoEstoque;
 import br.com.scev.models.TipoMovimentacao;
-import br.com.scev.models.TransferenciaEstoque;
 import br.com.scev.negocio.RegrasMovimentacao;
 import br.com.scev.repos.EstoqueDao;
 import br.com.scev.repos.MovimentacaoDao;
 import br.com.scev.repos.ProdutoDao;
 import br.com.scev.repos.ProdutoEstoqueDao;
 import br.com.scev.validators.MovimentacaoValidator;
-import br.com.scev.validators.TransferenciaValidator;
 
 @Controller
 @RequestMapping("movimentacao")
+@CrossOrigin
 public class MovimentacaoController {
 	
 	@Autowired
@@ -50,6 +50,17 @@ public class MovimentacaoController {
 	@InitBinder
 	public void InitBinder(WebDataBinder binder){
 		binder.addValidators(new MovimentacaoValidator());
+	}
+	
+	@GetMapping("tipos")
+	public ModelAndView getTipos() {
+		
+		ModelAndView view = new ModelAndView();
+		
+		view.addObject("tipoMovimentacoes", TipoMovimentacao.values());
+		
+		return view;
+		
 	}
 
 	@GetMapping("form")

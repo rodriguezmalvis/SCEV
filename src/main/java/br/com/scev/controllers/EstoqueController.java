@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import br.com.scev.validators.EstoqueValidator;
 
 @Controller
 @RequestMapping("estoque")
+@CrossOrigin
 public class EstoqueController {
 	
 	@Autowired
@@ -31,6 +33,16 @@ public class EstoqueController {
 	@InitBinder
 	public void InitBinder(WebDataBinder binder){
 		binder.addValidators(new EstoqueValidator());
+	}
+	
+	@GetMapping("tipos")
+	public ModelAndView getTipos(){
+		
+		ModelAndView view = new ModelAndView();
+		
+		view.addObject("tiposEstoque", TipoEstoque.values());
+		
+		return view;
 	}
 
 	@GetMapping("form")
@@ -101,8 +113,7 @@ public class EstoqueController {
 	public ModelAndView listaProdutosEstoque(@PathVariable Integer idEstoque) {
 		
 		ModelAndView view = new ModelAndView("produtosEstoque");
-		Estoque findOne = estoqueDao.findOne(idEstoque);
-		view.addObject("estoque", findOne);
+		view.addObject("estoque", estoqueDao.findOne(idEstoque));
 		
 		return view;
 		

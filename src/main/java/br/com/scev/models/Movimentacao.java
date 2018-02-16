@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Movimentacao implements Serializable {
 
@@ -24,6 +27,7 @@ public class Movimentacao implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="id_estoque",nullable=false)
+	@JsonManagedReference
 	private Estoque estoque;
 	
 	@ManyToOne

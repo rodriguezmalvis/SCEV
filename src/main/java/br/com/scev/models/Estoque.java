@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 public class Estoque {
@@ -25,6 +25,7 @@ public class Estoque {
 	private List<ProdutoEstoque> produtosEstoque;
 	
 	@OneToMany(mappedBy="estoque")
+	@JsonBackReference
 	private List<Movimentacao> movimentacoes;
 	
 	public BigInteger getQuantidadeProdutos() {

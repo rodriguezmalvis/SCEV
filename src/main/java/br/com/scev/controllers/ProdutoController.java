@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +22,9 @@ import br.com.scev.repos.EstoqueDao;
 import br.com.scev.repos.ProdutoDao;
 import br.com.scev.validators.ProdutoValidator;
 
-@Controller
 @RequestMapping("produto")
+@Controller
+@CrossOrigin
 public class ProdutoController {
 	
 	@Autowired
@@ -37,6 +39,17 @@ public class ProdutoController {
 	@InitBinder
 	public void InitBinder(WebDataBinder binder){
 		binder.addValidators(new ProdutoValidator());
+	}
+	
+	@GetMapping("tipos")
+	public ModelAndView getTipos() {
+		
+		ModelAndView view = new ModelAndView();
+		
+		view.addObject("tiposProdutos",TipoProduto.values());
+		
+		return view;
+		
 	}
 	
 	@GetMapping("form")
