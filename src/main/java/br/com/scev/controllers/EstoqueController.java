@@ -113,7 +113,7 @@ public class EstoqueController {
 	public ModelAndView listaProdutosEstoque(@PathVariable Integer idEstoque) {
 		
 		ModelAndView view = new ModelAndView("produtosEstoque");
-		view.addObject("estoque", estoqueDao.findOne(idEstoque));
+		view.addObject("produtos", estoqueDao.findOne(idEstoque).getProdutosEstoque());
 		
 		return view;
 		
@@ -128,10 +128,15 @@ public class EstoqueController {
 		
 		Collections.sort(estoque.getMovimentacoes(),(p1,p2) -> p2.getIdMovimentacao().compareTo(p1.getIdMovimentacao()));
 		
-		view.addObject("estoque", estoque);
+		view.addObject("movimentacoes", estoque.getMovimentacoes());
 		
 		return view;
 		
+	}
+	
+	@GetMapping("{idEstoque}")
+	public Estoque getEstoque(@PathVariable Integer idEstoque) {
+		return estoqueDao.findOne(idEstoque);
 	}
 	
 }

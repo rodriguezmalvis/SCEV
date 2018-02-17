@@ -12,15 +12,12 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import br.com.scev.models.Estoque;
 import br.com.scev.models.Movimentacao;
-import br.com.scev.models.Produto;
 import br.com.scev.models.ProdutoEstoque;
 import br.com.scev.models.TipoMovimentacao;
 import br.com.scev.negocio.RegrasMovimentacao;
@@ -61,41 +58,6 @@ public class MovimentacaoController {
 		ModelAndView view = new ModelAndView();
 		
 		view.addObject("tipoMovimentacoes", TipoMovimentacao.values());
-		
-		return view;
-		
-	}
-	
-	@GetMapping("estoques")
-	public ModelAndView getEstoques() {
-		
-		ModelAndView view = new ModelAndView();
-		
-		view.addObject("estoques",estoqueDao.findAll());
-		
-		return view;
-		
-	}
-	
-	@GetMapping("produtos/{idEstoque}")
-	public ModelAndView getProdutosEstoque(@PathVariable Integer idEstoque) {
-		
-		ModelAndView view = new ModelAndView();
-		
-		Estoque estoque = estoqueDao.findOne(idEstoque);
-		
-		view.addObject("produtos",estoque.getProdutosEstoque());
-		
-		return view;
-		
-	}
-	
-	@GetMapping("produtos")
-	public ModelAndView getProdutos() {
-		
-		ModelAndView view = new ModelAndView();
-		
-		view.addObject("produtos", produtoDao.findAll());
 		
 		return view;
 		
