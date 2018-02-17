@@ -27,7 +27,6 @@ public class Movimentacao implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="id_estoque",nullable=false)
-	@JsonManagedReference
 	private Estoque estoque;
 	
 	@ManyToOne

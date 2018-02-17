@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +29,7 @@ import br.com.scev.validators.TransferenciaValidator;
 
 @Controller
 @RequestMapping("transferencia")
+@CrossOrigin
 public class TransferenciaController {
 	
 	@Autowired
@@ -44,6 +47,16 @@ public class TransferenciaController {
 	@InitBinder
 	public void InitBinder(WebDataBinder binder){
 		binder.addValidators(new TransferenciaValidator());
+	}
+	
+	@GetMapping("outrosEstoques/{idEstoque}")
+	public ModelAndView getOutrosEstoques(@PathVariable Integer idEstoque){
+		
+		ModelAndView view = new ModelAndView();
+		
+		view.addObject("estoques",  estoqueDao.getOutrosEstoques(idEstoque));
+		
+		return view;
 	}
 
 	@GetMapping("form")
