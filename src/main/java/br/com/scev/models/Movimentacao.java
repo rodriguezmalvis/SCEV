@@ -21,6 +21,7 @@ public class Movimentacao implements Serializable {
 	private TipoMovimentacao tipo;
 	private String descricao;
 	private BigInteger quantidade;
+	private BigInteger preco;
 	
 	@ManyToOne
 	@JoinColumn(name="id_estoque",nullable=false)
@@ -78,6 +79,14 @@ public class Movimentacao implements Serializable {
 	}
 	public void setQuantidade(BigInteger quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public BigInteger getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigInteger preco) {
+		this.preco = preco;
 	}
 	
 }
