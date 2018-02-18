@@ -1,5 +1,6 @@
 package br.com.scev.controllers;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -57,7 +58,12 @@ public class MovimentacaoController {
 		
 		ModelAndView view = new ModelAndView();
 		
-		view.addObject("tipoMovimentacoes", TipoMovimentacao.values());
+		List<TipoMovimentacao> movimentacoes = new ArrayList<>();
+		movimentacoes.add(TipoMovimentacao.Entrada);
+		movimentacoes.add(TipoMovimentacao.Venda);
+		movimentacoes.add(TipoMovimentacao.Doação);
+		
+		view.addObject("tipoMovimentacoes", movimentacoes);
 		
 		return view;
 		

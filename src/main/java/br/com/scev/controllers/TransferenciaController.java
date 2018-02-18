@@ -1,5 +1,6 @@
 package br.com.scev.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -64,12 +65,25 @@ public class TransferenciaController {
 		
 		ModelAndView view = new ModelAndView("transferenciaForm");
 		
-		view.addObject("tipoMovimentacao", TipoMovimentacao.Saida);
+		view.addObject("tipoMovimentacao", TipoMovimentacao.Transferência);
 		view.addObject("produtos",produtoDao.findAll());
 		view.addObject("estoques",estoqueDao.findAll());
 		
 		return view;
 		
+	}
+	
+	@GetMapping("tipos")
+	public ModelAndView getTipos() {
+		ModelAndView view = new ModelAndView();
+		
+		List<TipoMovimentacao> movimentacoes = new ArrayList<>();
+		movimentacoes.add(TipoMovimentacao.Consignação);
+		movimentacoes.add(TipoMovimentacao.Transferência);
+		
+		view.addObject("tipoMovimentacoes", movimentacoes);
+		
+		return view;
 	}
 	
 

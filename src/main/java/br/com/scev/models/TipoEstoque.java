@@ -2,7 +2,9 @@ package br.com.scev.models;
 
 public enum TipoEstoque {
 	
-	Armazen,
-	Casa
+	Armazém,
+	Casa,
+	Livraria,
+	Loja
 
 }

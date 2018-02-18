@@ -26,7 +26,7 @@ public class RegrasMovimentacao {
 			produtoEstoqueDao.save(produtoEstoque);
 		}else {
 			
-			if(movimentacao.getTipo() == TipoMovimentacao.Saida) {
+			if(movimentacao.getTipo() != TipoMovimentacao.Entrada) {
 				produtoEstoque.setQuantidade(produtoEstoque.getQuantidade().subtract(movimentacao.getQuantidade()));
 			}else {
 				produtoEstoque.setQuantidade(produtoEstoque.getQuantidade().add(movimentacao.getQuantidade()));
@@ -42,9 +42,9 @@ public class RegrasMovimentacao {
 		
 		String erro = "";
 		
-		if(produtoEstoque == null && movimentacao.getTipo() == TipoMovimentacao.Saida) {
+		if(produtoEstoque == null && movimentacao.getTipo() != TipoMovimentacao.Entrada) {
 			erro = "Estoque selecionado não tem itens para o tipo de movimentação";
-		}else if(movimentacao.getTipo() == TipoMovimentacao.Saida && (produtoEstoque.getQuantidade().intValue() < movimentacao.getQuantidade().intValue())) {
+		}else if(movimentacao.getTipo() != TipoMovimentacao.Entrada && (produtoEstoque.getQuantidade().intValue() < movimentacao.getQuantidade().intValue())) {
 			erro = "Estoque selecionado não tem itens suficientes para o tipo de movimentação."
 					+ " Movimentação: "+movimentacao.getQuantidade().intValue()+" / Estoque: "+produtoEstoque.getQuantidade().intValue();
 		}
