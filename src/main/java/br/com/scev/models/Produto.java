@@ -18,7 +18,7 @@ public class Produto {
 	private String Autor;
 	private Integer paginas;
 	private String formato;
-	private Integer isbn;
+	private String isbn;
 	private BigDecimal preco;
 	private String contato;
 	private String sinopse;
@@ -67,10 +67,10 @@ public class Produto {
 	public void setFormato(String formato) {
 		this.formato = formato;
 	}
-	public Integer getISBN() {
+	public String getISBN() {
 		return isbn;
 	}
-	public void setISBN(Integer ISBN) {
+	public void setISBN(String ISBN) {
 		this.isbn = ISBN;
 	}
 	public BigDecimal getPreco() {

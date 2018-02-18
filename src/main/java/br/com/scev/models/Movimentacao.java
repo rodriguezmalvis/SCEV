@@ -1,6 +1,7 @@
 package br.com.scev.models;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.math.BigInteger;
 
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class Movimentacao implements Serializable {
 	private TipoMovimentacao tipo;
 	private String descricao;
 	private BigInteger quantidade;
-	private BigInteger preco;
+	private BigDecimal preco;
 	
 	@ManyToOne
 	@JoinColumn(name="id_estoque",nullable=false)
@@ -81,11 +82,11 @@ public class Movimentacao implements Serializable {
 		this.quantidade = quantidade;
 	}
 
-	public BigInteger getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigInteger preco) {
+	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
 	}
 	
