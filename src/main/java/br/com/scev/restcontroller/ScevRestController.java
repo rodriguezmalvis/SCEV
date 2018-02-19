@@ -1,11 +1,14 @@
 package br.com.scev.restcontroller;
 
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -17,6 +20,8 @@ import br.com.scev.models.Estoque;
 import br.com.scev.models.Movimentacao;
 import br.com.scev.models.Produto;
 import br.com.scev.models.ProdutoEstoque;
+import br.com.scev.models.Response;
+import br.com.scev.models.TipoResposta;
 import br.com.scev.models.TransferenciaEstoque;
 import br.com.scev.negocio.RegrasMovimentacao;
 import br.com.scev.repos.EstoqueDao;
@@ -30,6 +35,9 @@ import br.com.scev.validators.TransferenciaValidator;
 @RestController
 @CrossOrigin
 public class ScevRestController {
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 	@Autowired
 	EstoqueDao estoqueDao;
@@ -98,13 +106,30 @@ public class ScevRestController {
 	
 	
 	@PostMapping("cadastraEstoque")
-	public void cadastraEstoque(@Valid @RequestBody Estoque estoque, BindingResult result) {
+	public Response cadastraEstoque(@Valid @RequestBody Estoque estoque, BindingResult result) {
+		
+		Response response = new Response();
 		
 		if(result.hasErrors()) {
-			System.out.println("erros");
+			response.setTipo(TipoResposta.warning);
+			response.setHeader("Alerta");
+			for (ObjectError erro : result.getAllErrors()) {
+				for (String codigo : erro.getCodes()) {
+					String message = messageSource.getMessage(codigo, null, "DefaultTitle", new Locale("pt-br"));
+					if(!message.contains("Default")) {
+						response.getMessages().add(message);
+					}
+				}
+			}
+			return response;
 		}
 		
 		estoqueDao.save(estoque);
+		response.setTipo(TipoResposta.success);
+		response.getMessages().add("Estoque cadastrado com sucesso");
+		response.setHeader("Sucesso");
+		
+		return response;
 		
 	}
 	
