@@ -77,10 +77,10 @@ public class ScevRestController {
 	}
 	
 	@PostMapping("cadastraTransferencia")
-	public void tranfereEstoque(@Valid @RequestBody TransferenciaEstoque transferencia, BindingResult result) {
+	public Response tranfereEstoque(@Valid @RequestBody TransferenciaEstoque transferencia, BindingResult result) {
 		
 		if(result.hasErrors()) {
-			System.out.println("erro");
+			return new Response(result, messageSource, TipoResposta.danger, "Alerta");
 		}
 		
 		List<Movimentacao> movimentaçoes = transferencia.getMovimentaçoes();
@@ -90,8 +90,8 @@ public class ScevRestController {
 		
 		String erro = regrasMov.verificaEstoqueMovimentacao(movimentaçoes.get(0), produtoEstoque);
 		
-		if(!erro.isEmpty() || result.hasErrors()) {
-			System.out.println("erro");
+		if(!erro.isEmpty()) {
+			return new Response(erro, TipoResposta.danger, "Alerta");
 		}else {
 			
 			transferencia.getMovimentaçoes().stream().forEach(m -> {
@@ -99,56 +99,45 @@ public class ScevRestController {
 						produtoEstoqueDao.findByEstoqueProduto(m.getEstoque().getIdEstoque(), m.getProduto().getIdProduto());
 				regrasMov.realizaMovimentacao(m, produtoEstoqueMovimentacao);
 			});
-			
+			return new Response("Transferencia realizada com sucesso", TipoResposta.success, "Sucesso");
 		}
 		
 	}
 	
-	
 	@PostMapping("cadastraEstoque")
 	public Response cadastraEstoque(@Valid @RequestBody Estoque estoque, BindingResult result) {
 		
-		Response response = new Response();
+		Response response = null;
 		
 		if(result.hasErrors()) {
-			response.setTipo(TipoResposta.warning);
-			response.setHeader("Alerta");
-			for (ObjectError erro : result.getAllErrors()) {
-				for (String codigo : erro.getCodes()) {
-					String message = messageSource.getMessage(codigo, null, "DefaultTitle", new Locale("pt-br"));
-					if(!message.contains("Default")) {
-						response.getMessages().add(message);
-					}
-				}
-			}
+			response = new Response(result, messageSource, TipoResposta.warning, "Alerta");
 			return response;
 		}
 		
 		estoqueDao.save(estoque);
-		response.setTipo(TipoResposta.success);
-		response.getMessages().add("Estoque cadastrado com sucesso");
-		response.setHeader("Sucesso");
-		
+		response = new Response("Estoque "+estoque.getNome()+" cadastrado com sucesso", TipoResposta.success, "Sucesso");
+			
 		return response;
 		
 	}
 	
 	@PostMapping("cadastraProduto")
-	public void cadastraProduto(@Valid @RequestBody Produto produto, BindingResult result) {
+	public Response cadastraProduto(@Valid @RequestBody Produto produto, BindingResult result) {
 		
 		if(result.hasErrors()) {
-			System.out.println("erros");
+			return new Response(result, messageSource, TipoResposta.danger, "Alerta");
 		}else {
 			produtoDao.save(produto);
+			return new Response("Produto "+produto.getTitulo()+" cadastrado com sucesso", TipoResposta.success, "Sucesso");
 		}
 		
 	}
 	
 	@PostMapping("cadastraMovimentacao")
-	public void cadastraMovimentacao(@Valid @RequestBody Movimentacao movimentacao,BindingResult result) {
+	public Response cadastraMovimentacao(@Valid @RequestBody Movimentacao movimentacao,BindingResult result) {
 		
 		if(result.hasErrors()) {
-			System.out.println("erros");
+			return new Response(result, messageSource, TipoResposta.danger, "Alerta");
 		}
 		
 		ProdutoEstoque produtoEstoque = 
@@ -157,10 +146,11 @@ public class ScevRestController {
 		String erro = regrasMov.verificaEstoqueMovimentacao(movimentacao, produtoEstoque);
 			
 		if(!erro.isEmpty()) {
-			System.out.println(erro);
+			return new Response(erro, TipoResposta.danger, "Alerta");
 		}else {
 			
 			regrasMov.realizaMovimentacao(movimentacao, produtoEstoque);
+			return new Response("Movimentação relizada com sucesso", TipoResposta.success, "Sucesso");
 		}
 		
 	}
