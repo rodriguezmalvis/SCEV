@@ -2,6 +2,7 @@ package br.com.scev.models;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +22,8 @@ public class Produto {
 	private String isbn;
 	private BigDecimal preco;
 	private String contato;
+	
+	@Column(length = 550)
 	private String sinopse;
 	
 	private String UrlFoto;
