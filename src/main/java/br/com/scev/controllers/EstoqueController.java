@@ -27,7 +27,7 @@ import br.com.scev.validators.EstoqueValidator;
 @CrossOrigin
 public class EstoqueController {
 	
-	@Autowired
+	@Autowired //comentario de teste pro git
 	EstoqueDao estoqueDao;
 	
 	@InitBinder
